@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+description = "Package for training and forecasting with Google Research's tsmixer"
+dynamic = ["version"]
+name = "tsmixer"
+
+authors = [
+  {name = "Mahdi Lamb", email = "mahdilamb@gmail.com"},
+  {name = "Si-An Chen, Chun-Liang Li, Nate Yoder, Sercan Arik and Tomas Pfister", email = "email@research.google.com"},
+]
+dependencies = [
+  "numpy",
+  "matplotlib",
+  "pandas",
+  "scikit-learn",
+  "tensorflow",
+  "fn2argparse@git+https://github.com/mahdilamb/argparse-from-fn",
+]
+
+[project.optional-dependencies]
+all = ["tsmixer[test,tensorboard,dev]"]
+dev = ["dynamic-markdown@git+https://github.com/mahdilamb/dynamic-markdown", "seaborn", "tabulate"]
+tensorboard = [
+  "tensorboard",
+]
+test = [
+  "black",
+  "isort",
+  "mypy",
+  "bandit",
+  "pytest",
+  "pytest-cov",
+  "docformatter",
+  "pydocstyle",
+]
+[tool.setuptools.dynamic]
+version = {attr = "tsmixer.__version__"}
+
+[tool.setuptools]
+packages = ["tsmixer"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.docformatter]
+black = true
+recursive = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+python_files = [
+  "test_*.py",
+]
+python_functions = ["*_test"]
+testpaths = [
+  "tests",
+]
